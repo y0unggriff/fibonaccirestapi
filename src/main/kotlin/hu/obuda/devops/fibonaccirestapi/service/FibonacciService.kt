@@ -5,7 +5,10 @@ import org.springframework.stereotype.Service
 @Service
 class FibonacciService {
     fun fibonacci(n: Int): Int {
-        return if (n == 1) 0
-        else 0 // TODO instead of this logic implement fibonacci
+        tailrec fun fibHelper(a: Int, b: Int, count: Int): Int {
+            return if (count == 0) a
+            else fibHelper(b, a + b, count - 1)
+        }
+        return fibHelper(0, 1, n)
     }
 }

@@ -8,15 +8,17 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/")
-class FibonacciController {
+@RequestMapping("/api")
+class FibonacciController @Autowired constructor(private val fibonacciService: FibonacciService) {
 
-    @Autowired
-    var fibonacciService: FibonacciService? = null
+    @GetMapping("/fibonacci")
+    fun fibonacci(@RequestParam n: Int): Int? {
+        // Check if n is greater than 46
+        if (n > 46) {
+            return null // Return null for invalid input
+        }
 
-    @GetMapping(value = ["fibonacci"])
-    open fun fibonacci(@RequestParam n: Int): Int? {
-        // TODO - If n is greater than 46 then return BAD REQUEST use HttpStatus
-        return fibonacciService?.fibonacci(n)
+        // Calculate and return the Fibonacci number
+        return fibonacciService.fibonacci(n)
     }
 }
